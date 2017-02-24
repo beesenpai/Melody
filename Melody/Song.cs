@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 using TagLib;
+using System.Data.SQLite;
 
 namespace Melody.Core {
     public class Song {
@@ -22,7 +23,10 @@ namespace Melody.Core {
         public string Conductor { get; private set; }
         public uint BPM { get; private set; }
         public bool Broken { get; private set; }
+        public bool Heard;
+        public bool Favorite;
 
+        private Song() { }
         public Song(string filePath) {
             FilePath = filePath;
             var file = TagLib.File.Create(FilePath);
@@ -40,6 +44,37 @@ namespace Melody.Core {
             Composers = file.Tag.Composers;
             Conductor = file.Tag.Conductor;
             BPM = file.Tag.BeatsPerMinute;
+            Broken = false;
+            Heard = false;
+            Favorite = false;
+        }
+
+        public static Song Get(SQLiteCommand song) {
+            SQLiteDataReader r = song.ExecuteReader();
+            if (!r.HasRows) return null;
+            r.Read();
+            Song ret = new Song();
+            ret.Album = (string)r["Album"];
+            ret.AlbumArt = (IPicture)r["AlbumArt"];
+            ret.Artists = ((string)r["Artists"]).Split(',');
+            ret.BPM = (uint)r["BPM"];
+            ret.Broken = (bool)r["Broken"];
+            ret.Composers = ((string)r["Composers"]).Split(',');
+            ret.Conductor = (string)r["Conductor"];
+            ret.Copyright = (string)r["Copyright"];
+            ret.Disc = (uint)r["Disc"];
+            ret.DiscCount = (uint)r["DiscCount"];
+            ret.Favorite = (bool)r["Favorite"];
+            ret.FilePath = (string)r["FilePath"];
+            ret.Genres = ((string)r["Genres"]).Split(',');
+            ret.Heard = (bool)r["Heard"];
+            ret.Lyrics = (string)r["Lyrics"];
+            ret.Title = (string)r["Title"];
+            ret.Track = (uint)r["Track"];
+            ret.TrackCount = (uint)r["TrackCount"];
+            ret.Year = (uint)r["Year"];
+            r.Close();
+            return ret;
         }
     }
 }

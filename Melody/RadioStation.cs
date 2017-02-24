@@ -11,5 +11,7 @@ namespace Melody.Core {
         public string Genre { get; private set; }
         public string Creator { get; private set; }
         public string Description { get; private set; }
+
+    
     }
 }
