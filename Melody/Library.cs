@@ -25,7 +25,7 @@ namespace Melody.Core {
         }
 
         public Song fetchSong(string path) {
-            return Song.Get(new SQLiteCommand("SELECT * FROM songs WHERE FilePath = " + path));    
+            return Song.Get(new SQLiteCommand("SELECT * FROM songs WHERE FilePath = " + path, db));    
         }
 
         public IEnumerable<Song> GetSongEnumerator() {
