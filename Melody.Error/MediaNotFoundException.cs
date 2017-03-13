@@ -7,8 +7,7 @@ namespace Melody.Error {
 		/// </summary>
 		public string URI { get; private set; }
 
-		public MediaNotFoundException(string uri) :
-			base("The request was not found in the current library.") {
+		public MediaNotFoundException(string uri) : base("The request was not found in the current library.") {
 			URI = uri;
 		}
 	}

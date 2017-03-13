@@ -29,6 +29,8 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="SongNotFoundException.cs" />
+    <Compile Include="MediaNotFoundException.cs" />
+    <Compile Include="SettingsException.cs" />
+    <Compile Include="LibraryException.cs" />
   </ItemGroup>
 </Project>
